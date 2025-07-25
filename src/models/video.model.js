@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 const videoSchema = new Schema(
   {
     videofiele: {
@@ -27,4 +28,5 @@ const videoSchema = new Schema(
   },
   { timestamps: true }
 );
+VideoSchema.plugin(mongooseAggregatePaginate);
 export const VideoSchema = new Schema("video", VideoSchema);
