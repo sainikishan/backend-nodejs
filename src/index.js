@@ -1,11 +1,10 @@
 // src/index.js
-import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import app from "./app.js"; // ✅ Import your app with routes configured
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
