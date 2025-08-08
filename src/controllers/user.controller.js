@@ -59,6 +59,7 @@ const registerUser = asyncHandler(async (req, res) => {
     passowrd,
     username: username.tolowercase,
   });
+  User.findById(user.e);
 });
 
 export { registerUser }; // ✅ Correct: named export
