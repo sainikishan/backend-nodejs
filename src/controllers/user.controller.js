@@ -2,6 +2,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import { user } from "../models/user.model.js";
+import { uploadCloudinary } from "../utils/cloudinary.js";
 
 const registerUser = asyncHandler(async (req, res) => {
   // return res.status(200).json({
@@ -40,6 +41,24 @@ const registerUser = asyncHandler(async (req, res) => {
   console.log("avataLoalPath:", avataLoalPath);
   const LocalPath = req.files?.coverImage[0]?.path;
   console.log("LocalPath:", LocalPath);
+  if (!avataLoalPath) {
+    throw new ApiError(400, "Avatar is required");
+  }
+  // upload images to cloudinary
+  const avatar = await uploadOnCloudinary(avataLoalPath);
+  const localimage = await uploadOnCloudinary(localimage);
+  if (!avatar) {
+    throw new ApiError(400, "User already exists");
+  }
+  //entry in database
+  const user = await User.create({
+    fullname,
+    avatar: avatar.url,
+    coverImage: coverImage?.url || " ",
+    email,
+    passowrd,
+    username: username.tolowercase,
+  });
 });
 
 export { registerUser }; // ✅ Correct: named export
